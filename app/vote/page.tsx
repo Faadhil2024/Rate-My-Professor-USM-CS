@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useVoterId } from "@/lib/hooks/use-voter-id";
 import { VoteCard } from "@/components/vote-card";
-import { SilkBackground } from "@/components/ui/silk-background";
 
 type Professor = {
   id: number;
