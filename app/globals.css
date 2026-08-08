@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0A0A0B;
+  --foreground: #ededed;
 }
 
 @theme inline {
@@ -10,17 +10,101 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-base: #0A0A0B;
+  --color-surface: #141416;
+  --color-accent: #F5A623;
+  --color-like: #4ADE80;
+  --color-dislike: #F87171;
+
+  --radius-chip: 8px;
+  --radius-control: 12px;
+  --radius-card: 20px;
+
+  --shadow-card: 0 1px 2px rgba(0,0,0,0.04), 0 8px 24px rgba(0,0,0,0.06);
+  --shadow-hover: 0 2px 4px rgba(0,0,0,0.06), 0 16px 40px rgba(0,0,0,0.10);
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: translate(-72%, -62%) scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
+}
+
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --transparent: transparent;
+  --aurora-blue-500: #3b82f6;
+  --aurora-indigo-300: #a5b4fc;
+  --aurora-blue-300: #93c5fd;
+  --aurora-violet-200: #ddd6fe;
+  --aurora-blue-400: #60a5fa;
+}
+
+@keyframes aurora {
+  0% {
+    background-position: 0% 50%, 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%, 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%, 0% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 60s linear infinite;
+}
+
+@theme {
+  --animate-aurora: aurora 60s linear infinite;
+}
+
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+:root {
+  --black: #000000;
+  --transparent: transparent;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --indigo-300: #a5b4fc;
+  --violet-200: #ddd6fe;
+}
+
+@keyframes aurora {
+  from {
+    background-position: 50% 50%, 50% 50%;
+  }
+  to {
+    background-position: 350% 50%, 350% 50%;
+  }
+}
+
+.animate-aurora {
+  animation: aurora 60s linear infinite;
 }

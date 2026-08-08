@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Rate My Professor (USM CS)
 
-## Getting Started
+An anonymous, no-login voting tool for USM Computer Science students to react to their professors with a simple 👍 or 👎. Built as a class side-project, not affiliated with the official RateMyProfessors.com.
 
-First, run the development server:
+> No comments, no reviews, no accounts. Just anonymous reactions.
+
+## Screenshots
+
+**Hero**
+
+`![Hero](./docs/screenshot-hero.png)`
+
+**Most Loved (live leaderboard spotlight)**
+
+`![Most Loved](./docs/screenshot-mostloved.png)`
+
+**Vote grid**
+
+`![Vote grid](./docs/screenshot-grid.png)`
+
+*(Add your own screenshots to a `docs/` folder in the repo root and update the paths above.)*
+
+## Features
+
+- Anonymous voting: like, dislike, or skip any professor, no account needed
+- Change your vote anytime, one active vote per professor per anonymous voter
+- Live "Most Loved Right Now" spotlight, updates instantly as votes come in
+- Keyboard shortcuts: `J`/`K` or arrow keys to move between cards, `L` to like, `D` to dislike
+- Search/filter across all professors
+- Basic rate limiting to deter mass fake voting
+
+## Tech stack
+
+- **Framework:** Next.js 14+ (App Router), TypeScript
+- **Styling:** Tailwind CSS v4
+- **Animation:** Motion (Framer Motion)
+- **Database:** PostgreSQL via [Nhost](https://nhost.io)
+- **ORM:** Drizzle ORM
+- **Icons:** lucide-react
+
+## Getting started
+
+### 1. Clone and install
+
+```bash
+git clone <your-repo-url>
+cd rate-my-professor
+npm install
+```
+
+### 2. Set up the database
+
+Create a free [Nhost](https://nhost.io) project (or any Postgres provider). Enable **Public access** under Settings → Database if connecting from your local machine. Generate a database password and copy the connection string.
+
+Create `.env.local` in the project root:
+
+```
+DATABASE_URL=postgres://postgres:YOUR_PASSWORD@YOUR_HOST:5432/postgres
+```
+
+### 3. Push the schema
+
+```bash
+npx drizzle-kit push
+```
+
+> Once real vote data exists, switch to the safer `generate` + `migrate` workflow instead of `push` for future schema changes (see `migration-workflow.txt` in this repo, or ask before making schema changes).
+
+### 4. Seed professor data
+
+This project scrapes professor names and photos from USM's public CS faculty directory:
+
+```bash
+node scripts/scrape-photos.mjs
+npx tsx lib/db/seed.ts
+```
+
+### 5. Run it
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Backing up data
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Before any schema change or risky deploy, back up the database:
 
-## Learn More
+```bash
+node scripts/backup.mjs
+```
 
-To learn more about Next.js, take a look at the following resources:
+Writes a timestamped JSON snapshot to `backups/` (git-ignored, not meant to be committed).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  page.tsx              # Homepage: Hero + Most Loved + Vote grid, all in one scroll
+  api/
+    vote/route.ts        # Vote submission (rate-limited)
+    professors/route.ts  # Fetch professors + vote counts
+    leaderboard/route.ts # Aggregate leaderboard stats
+components/
+  hero.tsx
+  spotlight-card.tsx     # "Most Loved" live leaderboard card
+  vote-card.tsx
+  vote-button.tsx
+  ui/                    # Background effects, spotlight components
+lib/
+  db/
+    schema.ts             # Drizzle schema
+    index.ts               # DB client
+    seed.ts                 # Seeds scraped professor data
+  hooks/
+    use-voter-id.ts         # Anonymous client-side voter identity (localStorage)
+  rate-limit.ts             # In-memory IP rate limiter
+scripts/
+  scrape-photos.mjs         # One-time scraper for USM faculty photos
+  backup.mjs                # Database backup utility
+```
 
-## Deploy on Vercel
+## A note on anonymity and fairness
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Voting is fully anonymous by design, there's no login. This means there's an inherent tension between "no barriers to vote" and "no way to stop someone from voting many times with fake identities." A basic IP rate limiter is in place to raise the bar above a trivial script, but this is not bulletproof, and isn't meant to be, this is a fun class tool, not a security-critical system.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Disclaimer
+
+This project is a student-built, unofficial tool for informal, anonymous reactions. It is not affiliated with, endorsed by, or connected to RateMyProfessors.com or USM in any official capacity.

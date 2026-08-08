@@ -1,0 +1,63 @@
+.card {
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.045), transparent 32%),
+    #15141d;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.card::before {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  width: 62%;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(245, 166, 35, 0.68));
+}
+
+.hero {
+  position: relative;
+  height: 202px;
+  overflow: hidden;
+  clip-path: polygon(0 0, 100% 0, 100% 68%, 0 100%);
+  background: #e9edf3;
+}
+
+.photo {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  object-position: center center;
+}
+
+.info {
+  position: relative;
+  z-index: 1;
+  margin-top: -57px;
+  min-height: 150px;
+  padding: 62px 16px 16px;
+}
+
+.info::before {
+  position: absolute;
+  z-index: 0;
+  top: 33px;
+  right: -20px;
+  left: -20px;
+  height: 64px;
+  content: "";
+  background: #15141d;
+  transform: rotate(-7.5deg);
+  transform-origin: left center;
+}
+
+.info > * {
+  position: relative;
+  z-index: 1;
+}
