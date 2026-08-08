@@ -19,15 +19,15 @@ Built as a side project for my CS classmates at USM, we wanted a lightweight, an
 
 **Hero**
 
-`![Hero](./docs/screenshot-hero.png)`
+![Hero](./docs/screenshot-hero.png)
 
 **Most Loved (live leaderboard spotlight)**
 
-`![Most Loved](./docs/screenshot-mostloved.png)`
+![Most Loved](./docs/screenshot-mostloved.png)
 
 **Vote grid**
 
-`![Vote grid](./docs/screenshot-grid.png)`
+![Vote grid](./docs/screenshot-grid.png)
 
 
 ## Features
