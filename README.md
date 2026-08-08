@@ -4,6 +4,17 @@ An anonymous, no-login voting tool for USM Computer Science students to react to
 
 > No comments, no reviews, no accounts. Just anonymous reactions.
 
+## Why this exists
+
+Built as a side project for my CS classmates at USM, we wanted a lightweight, anonymous way to react to professors without the weight of full reviews. It started as a class tool and became a chance to work through some real product and engineering trade-offs: how do you build "anonymous" without a login, how do you keep a public leaderboard fair when there's no identity to check, and how do you make a 45-item voting flow feel good instead of like filling out a form.
+
+## Technical highlights
+
+- **Anonymous identity without accounts.** Each browser gets a random client-side UUID (`localStorage`), used only to enforce "one active vote per professor per voter" at the database level. No PII is ever collected or stored.
+- **Live-updating leaderboard, no polling.** The "Most Loved" spotlight is derived state, computed client-side from the same vote data already in memory. Clicking a vote updates one array, and the current leader recalculates instantly via `useMemo`, no extra API call, no delay.
+- **The anonymity/fairness trade-off, handled deliberately, not ignored.** No-login voting means there's no way to fully stop someone from mass-voting with fake identities. Rather than pretend this away, I added a basic IP-based rate limiter and documented the actual threat model in this README instead of overselling the tool's security.
+- **A resilient scraping pipeline for real data.** Professor names and photos are pulled live from USM's public CS faculty directory. The scraper had to handle inconsistent HTML across ~45 individual staff pages (photos living in different folder structures, false positives from favicons/template assets), solved with iterative pattern refinement rather than assuming one regex would work everywhere.
+
 ## Screenshots
 
 **Hero**
@@ -18,7 +29,6 @@ An anonymous, no-login voting tool for USM Computer Science students to react to
 
 `![Vote grid](./docs/screenshot-grid.png)`
 
-*(Add your own screenshots to a `docs/` folder in the repo root and update the paths above.)*
 
 ## Features
 
