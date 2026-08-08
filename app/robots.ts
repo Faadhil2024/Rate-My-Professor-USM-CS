@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://YOUR-DOMAIN-HERE.com/sitemap.xml",
+    sitemap: "https://rate-my-professor-usm-cs.onrender.com/sitemap.xml",
   };
 }

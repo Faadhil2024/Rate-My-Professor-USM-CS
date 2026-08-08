@@ -1,4 +1,5 @@
 # Rate My Professor (USM CS)
+**Live: [rate-my-professor-usm-cs.onrender.com](https://rate-my-professor-usm-cs.onrender.com/)**
 
 An anonymous, no-login voting tool for USM Computer Science students to react to their professors with a simple 👍 or 👎. Built as a class side-project, not affiliated with the official RateMyProfessors.com.
 
